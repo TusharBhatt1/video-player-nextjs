@@ -6,7 +6,10 @@ import videoPlayerStore from "../../Zustand/usePlayerStore";
 import ForwPlayBackBtns from "./ForwPlayBackBtns";
 import VolumeBtns from "./VolumeBtns";
 import FullScreen from "./FullScreen";
+import { CgSpinner } from "react-icons/cg";
+
 export default function Player() {
+  const [loading, setIsLoading] = useState(false);
   const { currentVideoId, setCurrentVideoId } = videoPlayerStore();
   const [showControls, setShowControls] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -24,7 +27,7 @@ export default function Player() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const timelineContainerRef = useRef<HTMLDivElement | null>(null);
   const videoContainerRef = useRef<HTMLDivElement | null>(null);
-  console.log(currentVideoId)
+
   useEffect(() => {
     const video = videoRef.current;
     setDuration(formatDuration(video.duration));
@@ -33,7 +36,7 @@ export default function Player() {
       setDuration(formatDuration(video.duration));
       setCurrentTime(video.currentTime);
       setShowControls(true);
-      setIsPlaying(true)
+      setIsPlaying(true);
     };
     video?.addEventListener("loadedmetadata", handleLoadedMetadata);
 
@@ -273,21 +276,24 @@ export default function Player() {
             </div>
           )}
         </div>
-   
-        <video
-          ref={videoRef}
-          autoPlay
-          onClick={togglePlay}
-          src={files[currentVideoId].url}
-          className="h-[50vh]"
-          type="video/mp4"
-          onLoadedMetadata={()=>console.log("loaded meta data")}
-          onLoad={()=>console.log("loaded meta data")}
-          onLoadStart={()=>console.log("loaded meta data")}
-          onload={()=>console.log("loaded meta data")}
-        >
-          Your browser does not support the video tag.
-        </video>
+        {loading ? (
+          <div className="h-[50vh] bg-slate-100 w-[50vw] flex justify-center items-center">
+           <CgSpinner size={24} className="animate-spin"/>
+          </div>
+        ) : (
+          <video
+            ref={videoRef}
+            autoPlay
+            onClick={togglePlay}
+            src={files[currentVideoId].url}
+            className="h-[50vh]"
+            type="video/mp4"
+            onWaiting={() => setIsLoading(true)}
+            onProgressCapture={() => setIsLoading(true)}
+          >
+            Your browser does not support the video tag.
+          </video>
+        )}
       </div>
     </div>
   );
