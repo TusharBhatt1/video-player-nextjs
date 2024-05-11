@@ -266,8 +266,8 @@ export default function Player() {
           )}
         </div>
         {loading && (
-          <div className="h-[75vh]  bg-black absolute w-full flex justify-center items-center">
-            <CgSpinner size={24} className="animate-spin" />
+          <div className="w-full bg-gray-100 bg-opacity-70 absolute h-full  flex justify-center items-center">
+            <CgSpinner size={32} className="animate-spin " />
           </div>
         )}
         <video
