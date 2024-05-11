@@ -277,7 +277,7 @@ export default function Player() {
           )}
         </div>
         {loading ? (
-          <div className="h-[50vh] bg-slate-100 w-[50vw] flex justify-center items-center">
+          <div className="h-[50vh] w-[50vw] flex justify-center items-center">
            <CgSpinner size={24} className="animate-spin"/>
           </div>
         ) : (
@@ -289,7 +289,7 @@ export default function Player() {
             className="h-[50vh]"
             type="video/mp4"
             onWaiting={() => setIsLoading(true)}
-            onProgressCapture={() => setIsLoading(true)}
+            onProgressCapture={() => {setIsLoading(true)}}
           >
             Your browser does not support the video tag.
           </video>
