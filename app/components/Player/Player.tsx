@@ -24,20 +24,10 @@ export default function Player() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const timelineContainerRef = useRef<HTMLDivElement | null>(null);
   const videoContainerRef = useRef<HTMLDivElement | null>(null);
-  console.log(currentVideoId)
   useEffect(() => {
     const video = videoRef.current;
     setDuration(formatDuration(video.duration));
     setCurrentTime(video.currentTime);
-
-    const handleLoadedMetadata = () => {
-      setDuration(formatDuration(video.duration));
-      setCurrentTime(video.currentTime);
-      setShowControls(true);
-
-      // setTimeout(() => setShowControls(false), 1000);
-    };
-    video?.addEventListener("loadedmetadata", handleLoadedMetadata);
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
       const tagName = document?.activeElement?.tagName.toLowerCase();
@@ -92,7 +82,6 @@ export default function Player() {
     document.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      video?.removeEventListener("loadedmetadata", handleLoadedMetadata);
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, [currentVideoId]);
@@ -215,7 +204,12 @@ export default function Player() {
       setIsFullscreen(false);
     }
   };
-
+  const handleLoadedMetadata = () => {
+    console.log("handleLoadedMetadata")
+    setDuration(formatDuration(videoRef.duration));
+    setCurrentTime(videoRef.currentTime);
+    setShowControls(true);
+  };
   return (
     <div
       className={`video-container ${isMiniPlayer ? "mini-player" : ""} ${
@@ -283,6 +277,12 @@ export default function Player() {
           src={files[currentVideoId].url}
           className="h-[50vh]"
           type="video/mp4"
+          onLoadedMetadata={handleLoadedMetadata}
+        
+          onLoad={()=>console.log("loaded meta data")}
+          onLoadStart={()=>console.log("loaded meta data")}
+          onload={()=>console.log("loaded meta data")}
+         
         >
           Your browser does not support the video tag.
         </video>

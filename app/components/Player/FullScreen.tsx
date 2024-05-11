@@ -21,7 +21,7 @@ export default function FullScreen({
   return (
     <>
     <div className="duration-container">
-    <div className="current-time">{currentTime}</div>
+    <div className="current-time">{currentTime} /</div>
     <div className="total-time">{duration}</div>
   </div>
 
