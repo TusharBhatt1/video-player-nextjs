@@ -13,6 +13,7 @@ const {currentVideoId,setCurrentVideoId}=usePlayerStore()
       <div className="flex md:flex-col flex-wrap  gap-2">
         {files.map((vid, i) => (
           <div
+          key={i}
             onClick={() => setCurrentVideoId(i)}
             className={`${
              currentVideoId == i && "border-4 border-blue-700"

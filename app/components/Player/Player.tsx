@@ -7,6 +7,7 @@ import ForwPlayBackBtns from "./ForwPlayBackBtns";
 import VolumeBtns from "./VolumeBtns";
 import FullScreen from "./FullScreen";
 export default function Player() {
+  const [loading , setLoading]=useState(true)
   const { currentVideoId, setCurrentVideoId } = videoPlayerStore();
   const [showControls, setShowControls] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -29,11 +30,14 @@ export default function Player() {
     const video = videoRef.current;
     setDuration(formatDuration(video.duration));
     setCurrentTime(video.currentTime);
+    setLoading(false)
+
     const handleLoadedMetadata = () => {
+      setLoading(false)
       setDuration(formatDuration(video.duration));
       setCurrentTime(video.currentTime);
       setShowControls(true);
-      setTimeout(() => setShowControls(false), 1000);
+      // setTimeout(() => setShowControls(false), 1000);
     };
     video?.addEventListener("loadedmetadata", handleLoadedMetadata);
 
@@ -97,18 +101,16 @@ export default function Player() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      //@ts-ignore
       if (currentTime == videoRef?.current?.totalDuration) return;
-      //@ts-ignore
+
       const percent: any =
-        //@ts-ignore
         videoRef?.current?.currentTime / videoRef?.current?.duration;
-      //@ts-ignore
+
       timelineContainerRef.current.style.setProperty(
         "--progress-position",
         percent
       );
-      //@ts-ignore
+
       setCurrentTime(formatDuration(videoRef?.current?.currentTime));
     }, 1000);
     //@ts-ignore
@@ -226,6 +228,7 @@ export default function Player() {
       onMouseEnter={() => setShowControls(true)}
       onMouseLeave={() => setShowControls(false)}
     >
+    {loading && <p>Loading</p>}
       <div className="video-container paused" data-volume-level="high">
         <img className="thumbnail-img" />
         <div className="video-controls-container">
@@ -240,7 +243,7 @@ export default function Player() {
               </div>
             )}
           </div>
-          {showControls && (
+          {!loading && showControls && (
             <div className="controls">
               <ForwPlayBackBtns
                 currentVideoId={currentVideoId}
