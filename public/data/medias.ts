@@ -3,6 +3,7 @@ export const files = [
   "../../data/one.mp4",
   "../../data/two.mp4",
   "../../data/three.m4A",
+  "https://d2uwd5a1vk1y4d.cloudfront.net/inspiring.mp3",
   "../../data/four.mp4",
   "../../data/five.mp4",
 ];
