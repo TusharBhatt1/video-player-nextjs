@@ -27,17 +27,17 @@ export default function Player() {
   const videoContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+  
     setLoading(true)
     const video = videoRef.current;
     setDuration(formatDuration(video.duration));
     setCurrentTime(video.currentTime);
-    setTimeout(()=>setLoading(false),1000)
-
+    setLoading(false)
     const handleLoadedMetadata = () => {
-      setLoading(false)
       setDuration(formatDuration(video.duration));
       setCurrentTime(video.currentTime);
       setShowControls(true);
+      setLoading(false)
       // setTimeout(() => setShowControls(false), 1000);
     };
     video?.addEventListener("loadedmetadata", handleLoadedMetadata);
@@ -238,7 +238,7 @@ export default function Player() {
             ref={timelineContainerRef}
             onClick={handleTimelineUpdate}
           >
-            {showControls && (
+            {!loading && showControls && (
               <div className="timeline">
                 <div className="thumb-indicator"></div>
               </div>
