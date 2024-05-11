@@ -162,6 +162,7 @@ export default function Player() {
     minimumIntegerDigits: 2,
   });
   function formatDuration(time: any) {
+    if(!time) return "0:00"
     const seconds = Math.floor(time % 60);
     const minutes = Math.floor(time / 60) % 60;
     const hours = Math.floor(time / 3600);
