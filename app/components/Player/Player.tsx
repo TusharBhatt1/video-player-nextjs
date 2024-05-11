@@ -212,13 +212,7 @@ export default function Player() {
 
   return (
     <div
-      className={`video-container ${isMiniPlayer ? "mini-player" : ""} ${
-        isTheaterMode ? "theater" : ""
-      } 
-       ${isFullscreen ? "full-screen" : ""}
-      ${isMiniPlayer ? "full-screen" : ""}
-      
-     `}
+      className="video-container"
       ref={videoContainerRef}
       onMouseEnter={() => setShowControls(true)}
       onMouseLeave={() => setShowControls(false)}
