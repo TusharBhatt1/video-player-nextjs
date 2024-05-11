@@ -1,7 +1,7 @@
 import React from 'react'
 import { FaCompress, FaExpand } from 'react-icons/fa';
 interface FullScreenProps {
-    currentTime: string;
+    currentTime: string | number;
     duration: string;
     playbackSpeed: number;
     isFullscreen: boolean;
@@ -21,7 +21,7 @@ export default function FullScreen({
   return (
     <>
     <div className="duration-container">
-    <div className="current-time">{currentTime} /</div>
+    <div className="current-time">{currentTime === 0 ? "0:00" : currentTime } /</div>
     <div className="total-time">{duration}</div>
   </div>
 
