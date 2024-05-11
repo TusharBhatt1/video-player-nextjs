@@ -27,7 +27,7 @@ export default function Player() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const timelineContainerRef = useRef<HTMLDivElement | null>(null);
   const videoContainerRef = useRef<HTMLDivElement | null>(null);
-
+  
   useEffect(() => {
     const video = videoRef.current;
     setDuration(formatDuration(video.duration));
@@ -117,6 +117,8 @@ export default function Player() {
       return clearInterval(interval);
   }, [currentVideoId]);
   useEffect(() => {
+    if(loading) setIsLoading(false)
+
     if (currentTime == duration || currentTime == 0 || currentTime === "0:00")
       setShowControls(true);
   }, [currentTime]);
@@ -264,6 +266,7 @@ export default function Player() {
                   showVolume={showVolume}
                 />
               </div>
+              
               <FullScreen
                 isFullscreen={isFullscreen}
                 toggleFullscreenMode={toggleFullscreenMode}
@@ -276,24 +279,22 @@ export default function Player() {
             </div>
           )}
         </div>
-        {loading ? (
-          <div className="h-[50vh] bg-black w-[50vw] flex justify-center items-center">
-           <CgSpinner size={24} className="animate-spin"/>
+        {loading && (
+          <div className="h-[55vh]  bg-black absolute w-full flex justify-center items-center">
+            <CgSpinner size={24} className="animate-spin" />
           </div>
-        ) : (
-          <video
-            ref={videoRef}
-            autoPlay
-            onClick={togglePlay}
-            src={files[currentVideoId].url}
-            className="h-[50vh]"
-            type="video/mp4"
-            onWaiting={() => setIsLoading(true)}
-            onProgressCapture={() => {setIsLoading(true)}}
-          >
-            Your browser does not support the video tag.
-          </video>
         )}
+        <video
+          ref={videoRef}
+          autoPlay
+          onClick={togglePlay}
+          src={files[currentVideoId].url}
+          className="h-[55vh]"
+          type="video/mp4"
+          onWaiting={() =>  setIsLoading(true) }
+        >
+          Your browser does not support the video tag.
+        </video>
       </div>
     </div>
   );

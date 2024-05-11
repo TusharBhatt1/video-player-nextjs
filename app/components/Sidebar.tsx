@@ -43,7 +43,7 @@ export default function Sidebar() {
               } h-30 w-40 hover:outline outline-blue-700 cursor-pointer`}
             >
               {vid.type === "video" ? (
-                <video src={vid.url} className="h-20 w-full" />
+                <video src={vid.url} autoPlay muted className="h-20 w-full" />
               ) : (
                 <Image
                   src={audio}
