@@ -3,6 +3,7 @@
 @tailwind utilities;
 *, *::before, *::after {
   box-sizing: border-box;
+  font-family: var(--font-poppins);
 }
 
 body {
@@ -12,8 +13,9 @@ body {
 }
 
 .video-container {
+  border: 1px solid white;
   position: relative;
-  width: 80%;
+  width: 75%;
   max-width: 1000px;
   display: flex;
   justify-content: center;

@@ -224,6 +224,7 @@ export default function Player() {
         isTheaterMode ? "theater" : ""
       } ${isFullscreen ? "full-screen" : ""}
       ${isMiniPlayer ? "full-screen" : ""}
+      
      `}
       ref={videoContainerRef}
       onMouseEnter={() => setShowControls(true)}
