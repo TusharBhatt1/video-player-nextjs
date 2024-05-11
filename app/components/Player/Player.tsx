@@ -276,20 +276,16 @@ export default function Player() {
           )}
         </div>
    
-        <div>
-      {/* {isLoading && <div>Loading...</div>} */}
-      <video
-        ref={videoRef}
-        onClick={togglePlay}
-        onLoadedData={()=>console.log("loading data")}
-        onLoadStart={()=>console.log("loading started")}
-        // onError={() => setIsLoading(false)} // handle error
-        type="video/mp4"
-      >
-        <source src={files[currentVideoId].url} type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-    </div>
+        <video
+          ref={videoRef}
+          // poster={logo}
+          onClick={togglePlay}
+          src={files[currentVideoId].url}
+          className="h-40"
+          type="video/mp4"
+        >
+          Your browser does not support the video tag.
+        </video>
       </div>
     </div>
   );
