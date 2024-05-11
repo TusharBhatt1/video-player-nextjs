@@ -278,10 +278,10 @@ export default function Player() {
    
         <video
           ref={videoRef}
-          // poster={logo}
+          autoPlay
           onClick={togglePlay}
           src={files[currentVideoId].url}
-          className="h-40"
+          className="h-[50vh]"
           type="video/mp4"
         >
           Your browser does not support the video tag.
