@@ -27,10 +27,11 @@ export default function Player() {
   const videoContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    setLoading(true)
     const video = videoRef.current;
     setDuration(formatDuration(video.duration));
     setCurrentTime(video.currentTime);
-    setLoading(false)
+    setTimeout(()=>setLoading(false),1000)
 
     const handleLoadedMetadata = () => {
       setLoading(false)
