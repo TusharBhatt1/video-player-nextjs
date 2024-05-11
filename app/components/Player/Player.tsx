@@ -32,6 +32,7 @@ export default function Player() {
     const video = videoRef.current;
     setDuration(formatDuration(video.duration));
     setCurrentTime(video.currentTime);
+    setIsPlaying(false)
     const handleLoadedMetadata = () => {
       setDuration(formatDuration(video.duration));
       setCurrentTime(video.currentTime);
