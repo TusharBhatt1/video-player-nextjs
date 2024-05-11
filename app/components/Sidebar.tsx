@@ -27,7 +27,7 @@ export default function Sidebar() {
         }`}
       >
         <div className="flex items-center justify-between p-2">
-          <p className="font-bold ">All Media</p>
+          <p className="font-bold hidden md:block ">All Media</p>
           <button onClick={() => setShowSidebar(false)}>
             <IoIosCloseCircleOutline size={24} />
           </button>
@@ -42,8 +42,8 @@ export default function Sidebar() {
                 currentVideoId == i && "border-4 border-blue-700"
               } h-30 w-40 hover:outline outline-blue-700 cursor-pointer`}
             >
-              {vid.split(".")[5] === "mp4" ? (
-                <video src={vid} />
+              {vid.type === "video" ? (
+                <video src={vid.url} />
               ) : (
                 <Image
                   src={audio}
@@ -59,11 +59,5 @@ export default function Sidebar() {
       </div>
     </>
   );
-  return (
-    <div
-      className={`top-0 right-0 w-[35vw] bg-blue-600  p-10 pl-20 text-white fixed h-full z-40  ease-in-out duration-300 ${
-        showSidebar ? "translate-x-0 " : "translate-x-full"
-      }`}
-    ></div>
-  );
+
 }

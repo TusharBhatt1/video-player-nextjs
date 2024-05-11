@@ -7,7 +7,6 @@ import ForwPlayBackBtns from "./ForwPlayBackBtns";
 import VolumeBtns from "./VolumeBtns";
 import FullScreen from "./FullScreen";
 export default function Player() {
-  const [loading , setLoading]=useState(true)
   const { currentVideoId, setCurrentVideoId } = videoPlayerStore();
   const [showControls, setShowControls] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -25,19 +24,17 @@ export default function Player() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const timelineContainerRef = useRef<HTMLDivElement | null>(null);
   const videoContainerRef = useRef<HTMLDivElement | null>(null);
-
+  console.log(currentVideoId)
   useEffect(() => {
-  
-    setLoading(true)
     const video = videoRef.current;
     setDuration(formatDuration(video.duration));
     setCurrentTime(video.currentTime);
-    setLoading(false)
+
     const handleLoadedMetadata = () => {
       setDuration(formatDuration(video.duration));
       setCurrentTime(video.currentTime);
       setShowControls(true);
-      setLoading(false)
+
       // setTimeout(() => setShowControls(false), 1000);
     };
     video?.addEventListener("loadedmetadata", handleLoadedMetadata);
@@ -162,7 +159,7 @@ export default function Player() {
     minimumIntegerDigits: 2,
   });
   function formatDuration(time: any) {
-    if(!time) return "0:00"
+    if (!time) return "0:00";
     const seconds = Math.floor(time % 60);
     const minutes = Math.floor(time / 60) % 60;
     const hours = Math.floor(time / 3600);
@@ -231,7 +228,6 @@ export default function Player() {
       onMouseEnter={() => setShowControls(true)}
       onMouseLeave={() => setShowControls(false)}
     >
-    {loading && <p>Loading</p>}
       <div className="video-container paused" data-volume-level="high">
         <img className="thumbnail-img" />
         <div className="video-controls-container">
@@ -240,13 +236,13 @@ export default function Player() {
             ref={timelineContainerRef}
             onClick={handleTimelineUpdate}
           >
-            {!loading && showControls && (
+            {showControls && (
               <div className="timeline">
                 <div className="thumb-indicator"></div>
               </div>
             )}
           </div>
-          {!loading && showControls && (
+          {showControls && (
             <div className="controls">
               <ForwPlayBackBtns
                 currentVideoId={currentVideoId}
@@ -279,15 +275,21 @@ export default function Player() {
             </div>
           )}
         </div>
-        <video
-          ref={videoRef}
-          // poster={logo}
-          onClick={togglePlay}
-          src={files[currentVideoId]}
-          type="video/mp4"
-        >
-          Your browser does not support the video tag.
-        </video>
+   
+        <div>
+      {/* {isLoading && <div>Loading...</div>} */}
+      <video
+        ref={videoRef}
+        onClick={togglePlay}
+        onLoadedData={()=>console.log("loading data")}
+        onLoadStart={()=>console.log("loading started")}
+        // onError={() => setIsLoading(false)} // handle error
+        type="video/mp4"
+      >
+        <source src={files[currentVideoId].url} type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
       </div>
     </div>
   );
