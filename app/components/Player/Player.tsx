@@ -147,6 +147,10 @@ export default function Player() {
     videoRef?.current?.requestPictureInPicture();
   };
 
+  const toggleTheaterMode = () => {
+    setIsTheaterMode((prevState) => !prevState);
+  };
+
   const skip = (duration: number) => {
     if (videoRef.current) {
       videoRef.current.currentTime += duration;
@@ -203,12 +207,18 @@ export default function Player() {
       setIsFullscreen(true);
     } else {
       document.exitFullscreen();
-      setIsFullscreen(false);
     }
   };
 
   return (
     <div
+      className={`video-container ${isMiniPlayer ? "mini-player" : ""} ${
+        isTheaterMode ? "theater" : ""
+      } 
+       ${isFullscreen ? "full-screen" : ""}
+      ${isMiniPlayer ? "full-screen" : ""}
+      
+     `}
       ref={videoContainerRef}
       onMouseEnter={() => setShowControls(true)}
       onMouseLeave={() => setShowControls(false)}
