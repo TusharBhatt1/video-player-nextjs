@@ -277,7 +277,7 @@ export default function Player() {
           )}
         </div>
         {loading ? (
-          <div className="h-[50vh] w-[50vw] flex justify-center items-center">
+          <div className="h-[50vh] bg-black w-[50vw] flex justify-center items-center">
            <CgSpinner size={24} className="animate-spin"/>
           </div>
         ) : (
