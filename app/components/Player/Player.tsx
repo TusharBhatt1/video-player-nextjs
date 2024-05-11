@@ -7,7 +7,7 @@ import ForwPlayBackBtns from "./ForwPlayBackBtns";
 import VolumeBtns from "./VolumeBtns";
 import FullScreen from "./FullScreen";
 import { CgSpinner } from "react-icons/cg";
-import { formatDuration } from "@/app/functions";
+import { formatDuration } from "@/app/function/formatDuration";
 export default function Player() {
   const [loading, setIsLoading] = useState(false);
   const { currentVideoId, setCurrentVideoId } = videoPlayerStore();
@@ -27,12 +27,12 @@ export default function Player() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const timelineContainerRef = useRef<HTMLDivElement | null>(null);
   const videoContainerRef = useRef<HTMLDivElement | null>(null);
-  
+
   useEffect(() => {
     const video = videoRef.current;
     setDuration(formatDuration(video.duration));
     setCurrentTime(video.currentTime);
-    setIsPlaying(false)
+    setIsPlaying(false);
     const handleLoadedMetadata = () => {
       setDuration(formatDuration(video.duration));
       setCurrentTime(video.currentTime);
@@ -45,8 +45,15 @@ export default function Player() {
       const tagName = document?.activeElement?.tagName.toLowerCase();
 
       if (tagName === "input") return;
-
       switch (e.key.toLowerCase()) {
+        case "escape":
+          (function () {
+            // document.exitFullscreen();
+            videoContainerRef.current?.classList.remove("full-screen");
+            setIsFullscreen(false);
+            console.log("escaped");
+          })();
+          break;
         case " ":
         case "k":
           setIsPlaying((prevIsPlaying) => {
@@ -118,7 +125,7 @@ export default function Player() {
       return clearInterval(interval);
   }, [currentVideoId]);
   useEffect(() => {
-    if(loading) setIsLoading(false)
+    if (loading) setIsLoading(false);
 
     if (currentTime == duration || currentTime == 0 || currentTime === "0:00")
       setShowControls(true);
@@ -138,10 +145,6 @@ export default function Player() {
 
   const toggleMiniPlayerMode = () => {
     videoRef?.current?.requestPictureInPicture();
-  };
-
-  const toggleTheaterMode = () => {
-    setIsTheaterMode((prevState) => !prevState);
   };
 
   const skip = (duration: number) => {
@@ -206,12 +209,6 @@ export default function Player() {
 
   return (
     <div
-      className={`video-container ${isMiniPlayer ? "mini-player" : ""} ${
-        isTheaterMode ? "theater" : ""
-      } ${isFullscreen ? "full-screen" : ""}
-      ${isMiniPlayer ? "full-screen" : ""}
-      
-     `}
       ref={videoContainerRef}
       onMouseEnter={() => setShowControls(true)}
       onMouseLeave={() => setShowControls(false)}
@@ -251,7 +248,7 @@ export default function Player() {
                   showVolume={showVolume}
                 />
               </div>
-              
+
               <FullScreen
                 isFullscreen={isFullscreen}
                 toggleFullscreenMode={toggleFullscreenMode}
@@ -265,7 +262,7 @@ export default function Player() {
           )}
         </div>
         {loading && (
-          <div className="h-[55vh]  bg-black absolute w-full flex justify-center items-center">
+          <div className="h-[75vh]  bg-black absolute w-full flex justify-center items-center">
             <CgSpinner size={24} className="animate-spin" />
           </div>
         )}
@@ -274,9 +271,8 @@ export default function Player() {
           autoPlay
           onClick={togglePlay}
           src={files[currentVideoId].url}
-          className="h-[55vh]"
           type="video/mp4"
-          onWaiting={() =>  setIsLoading(true) }
+          onWaiting={() => setIsLoading(true)}
         >
           Your browser does not support the video tag.
         </video>
