@@ -6,6 +6,7 @@ import Image from "next/image";
 import usePlayerStore from "../Zustand/usePlayerStore";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { CiMenuFries } from "react-icons/ci";
+import toast from "react-hot-toast";
 
 export default function Sidebar() {
   const [showSidebar, setShowSidebar] = useState(false);
@@ -14,7 +15,7 @@ export default function Sidebar() {
     <>
       {!showSidebar && (
         <div
-        data-testid="menubutton"
+          data-testid="menubutton"
           onClick={() => setShowSidebar(!showSidebar)}
           className="fixed  z-50 flex items-center cursor-pointer right-10 top-6"
         >
@@ -23,7 +24,7 @@ export default function Sidebar() {
       )}
 
       <div
-      data-testid="sidebar"
+        data-testid="sidebar"
         className={`top-0 right-0 w-[25vw]  bg-black   p-10 pl-20 text-white fixed h-full z-50  ease-in-out duration-300 ${
           showSidebar ? "translate-x-0 " : "translate-x-full"
         }`}
@@ -61,5 +62,4 @@ export default function Sidebar() {
       </div>
     </>
   );
-
 }

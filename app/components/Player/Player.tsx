@@ -8,6 +8,7 @@ import VolumeBtns from "./VolumeBtns";
 import FullScreen from "./FullScreen";
 import { CgSpinner } from "react-icons/cg";
 import { formatDuration } from "@/app/function/formatDuration";
+import toast from "react-hot-toast";
 export default function Player() {
   const [loading, setIsLoading] = useState(false);
   const { currentVideoId, setCurrentVideoId } = videoPlayerStore();
@@ -81,10 +82,10 @@ export default function Player() {
           }
           break;
         case "arrowleft":
-          skip(-5);
+          skip(-10);
           break;
         case "arrowright":
-          skip(5);
+          skip(10);
           break;
         case "arrowup":
           toggleVolume(videoRef.current?.volume + 0.2);
@@ -149,9 +150,25 @@ export default function Player() {
     let newVolume: any;
     if (typeof e === "number") {
       console.log("received " + e);
-      if (e < 0) newVolume = 0;
-      else if (e > 1) newVolume = 1;
-      else newVolume = e;
+      if (e < 0) {
+        toast(`Mute`, {
+          duration: 1000,
+          position: "top-left",
+        });
+        newVolume = 0;
+      } else if (e > 1) {
+        toast(`Volume is Full`, {
+          duration: 1000,
+          position: "top-left",
+        });
+        newVolume = 1;
+      } else {
+        newVolume = e;
+        toast.success(`volume updated`, {
+          duration: 1000,
+          position: "top-left",
+        });
+      }
     } else newVolume = e.target.value;
     console.log(newVolume);
     setVolume(newVolume);
@@ -164,6 +181,10 @@ export default function Player() {
     else setIsMuted(false);
   };
   const skip = (duration: number) => {
+    toast.success(`skipping ${duration} secs`, {
+      duration: 1000,
+      position: "top-left",
+    });
     if (videoRef.current) {
       videoRef.current.currentTime += duration;
       //@ts-ignore
