@@ -14,6 +14,7 @@ export default function Sidebar() {
     <>
       {!showSidebar && (
         <div
+        data-testid="menubutton"
           onClick={() => setShowSidebar(!showSidebar)}
           className="fixed  z-50 flex items-center cursor-pointer right-10 top-6"
         >
@@ -22,6 +23,7 @@ export default function Sidebar() {
       )}
 
       <div
+      data-testid="sidebar"
         className={`top-0 right-0 w-[25vw]  bg-black   p-10 pl-20 text-white fixed h-full z-50  ease-in-out duration-300 ${
           showSidebar ? "translate-x-0 " : "translate-x-full"
         }`}

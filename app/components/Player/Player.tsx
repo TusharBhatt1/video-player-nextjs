@@ -21,8 +21,6 @@ export default function Player() {
   const [duration, setDuration] = useState(0);
 
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [isMiniPlayer, setIsMiniPlayer] = useState(false);
-  const [isTheaterMode, setIsTheaterMode] = useState(false);
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const timelineContainerRef = useRef<HTMLDivElement | null>(null);
@@ -65,9 +63,6 @@ export default function Player() {
           break;
         case "f":
           toggleFullscreenMode();
-          break;
-        case "t":
-          toggleTheaterMode();
           break;
         case "i":
           toggleMiniPlayerMode();
@@ -147,9 +142,6 @@ export default function Player() {
     videoRef?.current?.requestPictureInPicture();
   };
 
-  const toggleTheaterMode = () => {
-    setIsTheaterMode((prevState) => !prevState);
-  };
 
   const skip = (duration: number) => {
     if (videoRef.current) {
@@ -226,13 +218,13 @@ export default function Player() {
             onClick={handleTimelineUpdate}
           >
             {showControls && (
-              <div className="timeline">
+              <div className="timeline" data-testid="timeline">
                 <div className="thumb-indicator"></div>
               </div>
             )}
           </div>
           {showControls && (
-            <div className="controls">
+            <div data-testid="controls" className="controls">
               <ForwPlayBackBtns
                 currentVideoId={currentVideoId}
                 setCurrentVideoId={setCurrentVideoId}
@@ -271,6 +263,7 @@ export default function Player() {
           </div>
         )}
         <video
+          data-testid="video"
           ref={videoRef}
           autoPlay
           onClick={togglePlay}
