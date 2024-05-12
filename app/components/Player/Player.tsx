@@ -124,6 +124,8 @@ export default function Player() {
 
     if (currentTime == duration || currentTime == 0 || currentTime === "0:00")
       setShowControls(true);
+    if(currentTime == duration) setIsPlaying(false)
+  
   }, [currentTime]);
 
   const togglePlay = () => {
