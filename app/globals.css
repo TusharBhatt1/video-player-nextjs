@@ -159,6 +159,11 @@ video {
   gap: .25rem;
   flex-grow: 1;
 }
+@media (max-width:600px) {
+  .duration-container{
+    display: none;
+  }
+}
 
 .video-container.captions .captions-btn {
   border-bottom: 3px solid red;
@@ -215,29 +220,6 @@ video {
   border-radius: 50%;
   transition: transform 150ms ease-in-out;
   aspect-ratio: 1 / 1;
-}
-
-.timeline .preview-img {
-  position: absolute;
-  height: 80px;
-  aspect-ratio: 16 / 9;
-  top: -1rem;
-  transform: translate(-50%, -100%);
-  left: calc(var(--preview-position) * 100%);
-  border-radius: .25rem;
-  border: 2px solid white;
-  display: none;
-}
-
-.thumbnail-img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
-  display: none;
 }
 
 .video-container.scrubbing .thumbnail-img {

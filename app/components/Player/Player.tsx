@@ -81,14 +81,16 @@ export default function Player() {
           }
           break;
         case "arrowleft":
-        case "j":
           skip(-5);
           break;
         case "arrowright":
-        case "l":
           skip(5);
           break;
-        default:
+        case "arrowup":
+          toggleVolume(videoRef.current?.volume + 0.2);
+          break;
+        case "arrowdown":
+          toggleVolume(videoRef.current?.volume - 0.2);
           break;
       }
     };
@@ -124,8 +126,7 @@ export default function Player() {
 
     if (currentTime == duration || currentTime == 0 || currentTime === "0:00")
       setShowControls(true);
-    if(currentTime == duration) setIsPlaying(false)
-  
+    if (currentTime == duration) setIsPlaying(false);
   }, [currentTime]);
 
   const togglePlay = () => {
@@ -144,7 +145,24 @@ export default function Player() {
     videoRef?.current?.requestPictureInPicture();
   };
 
+  const toggleVolume = (e: React.ChangeEvent<HTMLInputElement> | number) => {
+    let newVolume: any;
+    if (typeof e === "number") {
+      console.log("received " + e);
+      if (e < 0) newVolume = 0;
+      else if (e > 1) newVolume = 1;
+      else newVolume = e;
+    } else newVolume = e.target.value;
+    console.log(newVolume);
+    setVolume(newVolume);
+    if (videoRef.current) {
+      videoRef.current.volume = newVolume;
+      videoRef.current.muted = newVolume === 0;
+    }
 
+    if (newVolume == 0) setIsMuted(true);
+    else setIsMuted(false);
+  };
   const skip = (duration: number) => {
     if (videoRef.current) {
       videoRef.current.currentTime += duration;
@@ -181,18 +199,6 @@ export default function Player() {
       videoRef.current.playbackRate = newPlaybackRate;
       setPlaybackSpeed(newPlaybackRate);
     }
-  };
-
-  const toggleVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newVolume: any = e.target.value;
-    setVolume(newVolume);
-    if (videoRef.current) {
-      videoRef.current.volume = newVolume;
-      videoRef.current.muted = newVolume === 0;
-    }
-
-    if (newVolume == 0) setIsMuted(true);
-    else setIsMuted(false);
   };
 
   const toggleFullscreenMode = () => {
