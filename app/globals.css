@@ -23,6 +23,12 @@ body {
   background-color: rgb(7, 1, 1);
 }
 
+@media (max-width: 638px) {
+  .video-container {
+    width: 100%;
+    height: 50vh;
+  }
+}
 .video-container.theater,
 .video-container.full-screen {
   max-width: initial;
@@ -73,7 +79,9 @@ video {
   display: flex;
   gap: .5rem;
   padding: .25rem;
+  flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
 }
 
 .video-controls-container .controls button {
@@ -159,11 +167,11 @@ video {
   gap: .25rem;
   flex-grow: 1;
 }
-@media (max-width:600px) {
+/* @media (max-width:600px) {
   .duration-container{
     display: none;
   }
-}
+} */
 
 .video-container.captions .captions-btn {
   border-bottom: 3px solid red;

@@ -3,9 +3,9 @@ import VideoPlayer from "./components/Player/Player";
 import Sidebar from "./components/Sidebar";
 export default function page() {
   return (
-    <div data-testid="main-div" className="flex flex-col">
+    <div data-testid="main-div" className="flex flex-col p-7 mt-4">
 
-      <div className="flex items-center p-7 justify-center md:flex-row flex-col-reverse ">
+      <div className="flex items-center justify-center md:flex-row flex-col-reverse ">
         <Sidebar />
         <VideoPlayer />
       </div>

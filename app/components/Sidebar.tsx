@@ -17,7 +17,7 @@ export default function Sidebar() {
         <div
           data-testid="menubutton"
           onClick={() => setShowSidebar(!showSidebar)}
-          className="fixed  z-50 flex items-center cursor-pointer right-10 top-6"
+          className="fixed  z-100 hidden sm:flex items-center cursor-pointer right-10 top-6"
         >
           <CiMenuFries size={32} />
         </div>
