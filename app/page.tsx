@@ -12,7 +12,7 @@ export default function page() {
       <div className="flex flex-col gap-2 justify-center items-center py-7">
       <p className="text-italic">Built with NextJS, Typescript , Zustand with Jest for testing.</p>
       <h1 className="font-bold">by Tushar Bhatt</h1>
-      <p className="hidden sm:block text-sm">(View on big screens for better experience)</p>
+      <p className="block sm:hidden text-sm">(View on big screens for better experience)</p>
       </div>
     </div>
   );
