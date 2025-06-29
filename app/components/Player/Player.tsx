@@ -20,6 +20,7 @@ export default function Player() {
   const [playbackSpeed, setPlaybackSpeed] = useState(1);
   const [currentTime, setCurrentTime] = useState(0.0);
   const [duration, setDuration] = useState(0);
+  const [isFirstRender, setIsFirstRender] = useState(true);
 
   const [isFullscreen, setIsFullscreen] = useState(false);
 
@@ -36,7 +37,10 @@ export default function Player() {
       setDuration(formatDuration(video.duration));
       setCurrentTime(video.currentTime);
       setShowControls(true);
-      setIsPlaying(true);
+      if (!isFirstRender) {
+        setIsPlaying(true);
+        video?.play();
+      }
     };
     video?.addEventListener("loadedmetadata", handleLoadedMetadata);
 
@@ -103,6 +107,13 @@ export default function Player() {
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, [currentVideoId]);
+
+
+  useEffect(() => {
+    if (isFirstRender) {
+      setIsFirstRender(false);
+    }
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -294,7 +305,6 @@ export default function Player() {
         <video
           data-testid="video"
           ref={videoRef}
-          autoPlay
           onClick={togglePlay}
           src={files[currentVideoId].url}
           type="video/mp4"
