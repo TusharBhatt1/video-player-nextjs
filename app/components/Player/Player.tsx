@@ -133,6 +133,7 @@ export default function Player() {
     if (currentTime == videoRef?.current?.totalDuration)
       return clearInterval(interval);
   }, [currentVideoId]);
+  
   useEffect(() => {
     if (loading) setIsLoading(false);
 
